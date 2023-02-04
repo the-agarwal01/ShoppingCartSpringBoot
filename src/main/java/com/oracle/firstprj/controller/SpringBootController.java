@@ -27,12 +27,27 @@ public class SpringBootController {
 	@Autowired
 	ItemRepo itemrepo;
 	
+	
+	@GetMapping("/getItemDetails")
+	public Iterable<Item> itemDetail()
+	{
+		Iterable<Item> items = itemrepo.findAll();
+		
+		return items;
+		
+	}
+	
+	
+	
+	
+	
 	@PostMapping("/addCart")
 	public Cart add(@RequestBody AddCartDTO cartDto)
 	{
 		Cart ret=new Cart();
 		
 		Optional<Item> opItem = itemrepo.findById(cartDto.getItemId());
+		//Checking if that itemId is present or not
 		if(!opItem.isPresent()) {
 			System.out.println("Item Not Present");
 			return ret;
@@ -40,6 +55,7 @@ public class SpringBootController {
 		Item item = opItem.get();
 		
 		int qtyToAdd = 0;
+		// Getting the minimum of available number of items and item asked for 
 		qtyToAdd = Math.min(cartDto.getQty(), item.getItemqty());
 		double total = 0;
 		total = qtyToAdd*item.getItemprice();
@@ -55,8 +71,10 @@ public class SpringBootController {
 		}else {
 			cart.setStatus("Added " + cartDto.getQty() + " items");
 		}
+		//Adding to cart
 		cartrepo.save(cart);
 		
+		//Removing the added number of items in cart from item table
 		item.setItemqty(item.getItemqty()-qtyToAdd);
 		itemrepo.save(item);
 		
@@ -64,7 +82,7 @@ public class SpringBootController {
 		return ret;
 	}
 	
-	@PostMapping("/addOrder")
+	@PostMapping("/placeOrder")
 	public OrderItem addOrderItem(@RequestBody AddOrderDTO dto)
 	{
 
@@ -88,17 +106,8 @@ public class SpringBootController {
 		
 		System.out.println(cartobj);
 		return order;
-//		ordrepo.save(order);
-//		return order;
+
 	}
-	
-//	@PostMapping("/temp")
-//	public Cart addPerson(@RequestBody Cart obj)
-//	{
-//		System.out.println(obj);
-//		cartrepo.save(obj);
-//		return obj;
-//	}
 	
 	
 	

@@ -16,17 +16,17 @@ public class Cart {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cid;
+	private int cartid;
 	private int itemid;
 	private int quantity;
 	private String status;
 	private double totalamt;
 	
 	public int getCid() {
-		return cid;
+		return cartid;
 	}
 	public void setCid(int cid) {
-		this.cid = cid;
+		this.cartid = cid;
 	}
 	public int getItemid() {
 		return itemid;
@@ -48,7 +48,7 @@ public class Cart {
 	}
 	@Override
 	public String toString() {
-		return "Cart [cid=" + cid + ", itemid=" + itemid + ", quantity=" + quantity + ", status=" + status + "]";
+		return "Cart [cid=" + cartid + ", itemid=" + itemid + ", quantity=" + quantity + ", status=" + status + "]";
 	}
 	
 	public double getTotalAmt() {

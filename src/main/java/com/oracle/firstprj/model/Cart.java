@@ -1,16 +1,27 @@
 package com.oracle.firstprj.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.oracle.firstprj.repository.ItemRepo;
 
 @Entity
 public class Cart {
-
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cid;
 	private int itemid;
 	private int quantity;
 	private String status;
+	private double totalamt;
+	
 	public int getCid() {
 		return cid;
 	}
@@ -39,6 +50,14 @@ public class Cart {
 	public String toString() {
 		return "Cart [cid=" + cid + ", itemid=" + itemid + ", quantity=" + quantity + ", status=" + status + "]";
 	}
+	
+	public double getTotalAmt() {
+		return totalamt;
+	}
+	public void setTotalAmt(double totalAmt) {
+		this.totalamt = totalAmt;
+	}
+	
 	
 	
 	
